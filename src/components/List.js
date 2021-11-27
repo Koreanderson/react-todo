@@ -1,5 +1,6 @@
 import { Component } from "react";
 import ListItem from './ListItem.js';
+import NewItemForm from './NewItemForm.js';
 
 class List extends Component {
   constructor(props) {
@@ -30,8 +31,24 @@ class List extends Component {
         {this.state.listItems.map((item, i) => {
           return <ListItem content={item.content} complete={item.complete} key={i} index={this.index} onClick={() => this.onChildClick(i)}></ListItem>
         })}
+        <div>
+          <NewItemForm handleSubmit={(value) => this.addNewItem(value)}></NewItemForm>
+        </div>
       </div>
     );
+  }
+
+  addNewItem(value) {
+    let listItems = this.state.listItems;
+    listItems.push(
+      {
+        index: listItems.length,
+        content: value,
+        complete: false,
+      }
+    )
+
+    this.setState({listItems});
   }
 
   onChildClick(i) {
